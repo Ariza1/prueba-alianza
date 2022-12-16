@@ -1,0 +1,21 @@
+/* Structure */
+.content-table {
+  margin: 0px 60px;
+  .content-actiosn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    .mat-form-field {
+      width: 70%;
+    }
+  }
+  table {
+    width: 100%;
+  }
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}

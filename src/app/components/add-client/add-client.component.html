@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Create New Client</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formClient">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" autocomplete="off">
+      <mat-error *ngIf="name?.hasError('required')">name is <strong>required</strong></mat-error>
+      <mat-error *ngIf="name?.hasError('pattern')">enter name and las name <strong>valid</strong></mat-error>
+    </mat-form-field>
+    <div class="mid-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input type="text" matInput formControlName="phone" mask="(000) 000 00 00" autocomplete="off">
+        <mat-error *ngIf="phone?.hasError('required')">phone is <strong>required</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input type="text" matInput formControlName="email" autocomplete="off">
+        <mat-error *ngIf="email?.hasError('required')">email is <strong>required</strong></mat-error>
+        <mat-error *ngIf="email?.hasError('pattern')">email is not <strong>valid</strong></mat-error>
+      </mat-form-field>
+    </div>
+    <div class="mid-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Start Date</mat-label>
+        <input type="date" matInput formControlName="starDate">
+        <mat-error *ngIf="starDate?.hasError('required')">starDate is <strong>required</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>End Date</mat-label>
+        <input type="date" matInput formControlName="endDate">
+        <mat-error *ngIf="endDate?.hasError('required')">endDate is <strong>required</strong></mat-error>
+        <mat-error *ngIf="endDate?.hasError('mustBeBefore')">start date is greater than end date</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary"  cdkFocusInitial [disabled]="formClient.invalid" (click)="create()">Ok</button>
+</div>
