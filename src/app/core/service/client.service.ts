@@ -24,6 +24,10 @@ export class ClientService {
     return this._httpClient.get(this.URL + 'clients', this.requestOptions)
   }
 
+  getClientsBySharedkey(sharedkey: string): Observable<any> {
+    return this._httpClient.get(this.URL + `clients/${sharedkey}`, this.requestOptions)
+  }
+
   addClients(client: Client): Observable<any> {
     return this._httpClient.post(this.URL + 'clients', client, this.requestOptions)
   }

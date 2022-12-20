@@ -1,5 +1,5 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar  class="example-toolbar">
+  <mat-toolbar class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1 class="example-app-name">Alianza</h1>
   </mat-toolbar>
@@ -8,13 +8,97 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
       <mat-nav-list style="padding-left: 20px; padding-right: 20px;">
-        <mat-icon matListItemIcon>account_circle</mat-icon>
-        <a matListItemTitle routerLink="." >Clients</a>
+        <a matListItemTitle routerLinkActive="activo" routerLink=".">
+          <mat-icon matListItemIcon>account_circle</mat-icon>
+          Clients
+        </a>
+        <a matListItemTitle routerLinkActive="activo">
+          <mat-icon matListItemIcon>account_circle</mat-icon>
+          Client look history
+        </a>
+        <a matListItemTitle routerLinkActive="activo">
+          <mat-icon matListItemIcon>account_circle</mat-icon>
+          Emergency PIN configuration
+        </a>
+        <a matListItemTitle routerLinkActive="activo">
+          <mat-icon matListItemIcon>account_circle</mat-icon>
+          Emergency PIN history
+        </a>
       </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-     <div> <app-table-clients></app-table-clients></div>
+      <div class="content-button">
+        <button mat-raised-button extended color="primary" (click)="openDialog()" class="demo-button">
+          <mat-icon>person_add</mat-icon>
+          Add Client
+        </button>
+        <button mat-raised-button extended (click)="downloadExcel()" class="demo-button" [disabled]="!enableDownload">
+          <mat-icon>file_download</mat-icon>
+          download
+        </button>
+      </div>
+      <div class="content-button">
+        <form [formGroup]="formkey">
+          <mat-form-field appearance="fill" [hideRequiredMarker]="true">
+            <input matInput placeholder="Enter shard key" required autocomplete="off" formControlName="searchkey">
+          </mat-form-field>
+          <button (click)="getClient()" mat-raised-button color="primary" class="search" [disabled]="formkey.invalid">
+            search
+          </button>
+          <button mat-raised-button class="search" *ngIf="!showCard" (click)="showCard = true">
+            Advanced search
+          </button>
+        </form>
+      </div>
+
+      <div class="content-card" *ngIf="showCard">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Advanced search</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="formAdvanced">
+              <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput formControlName="name" autocomplete="off">
+                <mat-error *ngIf="name?.hasError('pattern')">enter name and las name <strong>valid</strong></mat-error>
+              </mat-form-field>
+              <div class="mid-form">
+                <mat-form-field appearance="fill">
+                  <mat-label>Phone</mat-label>
+                  <input type="text" matInput formControlName="phone" mask="(000) 000 00 00" autocomplete="off">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>E-mail</mat-label>
+                  <input type="text" matInput formControlName="email" autocomplete="off">
+                  <mat-error *ngIf="email?.hasError('pattern')">email is not <strong>valid</strong></mat-error>
+                </mat-form-field>
+              </div>
+              <div class="mid-form">
+                <mat-form-field appearance="fill">
+                  <mat-label>Start Date</mat-label>
+                  <input type="date" matInput formControlName="starDate">
+                  <mat-error *ngIf="starDate?.hasError('required')">starDate is <strong>required</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>End Date</mat-label>
+                  <input type="date" matInput formControlName="endDate">
+                  <mat-error *ngIf="endDate?.hasError('mustBeBefore')">start date is greater than end date</mat-error>
+                </mat-form-field>
+              </div>
+            </form>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button (click)="showCard = false">Cancel</button>
+            <button mat-button color="primary">Search</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <div *ngIf="data.length>1">
+        <app-table-clients [clients]="data"></app-table-clients>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

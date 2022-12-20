@@ -4,14 +4,7 @@
             <mat-label>Filter</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
         </mat-form-field>
-        <button mat-raised-button extended color="primary" (click)="openDialog()" class="demo-button">
-            <mat-icon>person_add</mat-icon>
-            Add Client
-        </button>
-        <button mat-raised-button  extended (click)="downloadExcel()" class="demo-button" [disabled]="!enableDownload">
-            <mat-icon>file_download</mat-icon>
-            download
-        </button>
+
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
