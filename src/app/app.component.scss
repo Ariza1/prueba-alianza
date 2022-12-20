@@ -58,5 +58,15 @@ h1.example-app-name {
   justify-content: center;
   .mat-card {
     width: 34%;
+    mat-form-field {
+      width: 100%;
+    }
+    .mid-form {
+      display: flex;
+      justify-content: space-between;
+      mat-form-field {
+        width: 48%;
+      }
+    }
   }
 }

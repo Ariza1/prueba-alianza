@@ -49,6 +49,15 @@ export class AppComponent implements OnDestroy {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
+  advancedSearch() {
+    if (this.formAdvanced.invalid) {
+      return;
+    }
+    const { name, phone, email, starDate, endDate } = this.formAdvanced.value;
+    let data = { name, phone, email, starDate, endDate }
+    this.clientService.advacedSearch(data).subscribe(resp => this.data = resp)
+  }
+
   downloadExcel(): any {
     let headers = ['sharedKey', 'name', 'phone', 'email', 'starDate', 'endDate']
     this.excelService.exportExcelWhitHeaders(this.data, "Clients", headers)
@@ -62,6 +71,11 @@ export class AppComponent implements OnDestroy {
         this.getClient()
       }
     });
+  }
+
+  cancelSearch() {
+    this.formAdvanced.reset();
+    this.showCard = false
   }
 
   getClient() {

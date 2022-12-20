@@ -31,4 +31,8 @@ export class ClientService {
   addClients(client: Client): Observable<any> {
     return this._httpClient.post(this.URL + 'clients', client, this.requestOptions)
   }
+
+  advacedSearch(client: any): Observable<any> {
+    return this._httpClient.post(this.URL + 'clients/advancedSearch', client, this.requestOptions)
+  }
 }
